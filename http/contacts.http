@@ -1,0 +1,6 @@
+@api = http://192.168.1.3:5000/api/contacts
+
+### GET ALL
+GET {{api}}/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjkxNjc2MDk3LCJleHAiOjE2OTE3NjI0OTd9.rZYUnOe7vM3-Yq3UXwS_-j0vwOu3a6shw71GTdnBPbQ
