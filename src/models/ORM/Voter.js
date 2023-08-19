@@ -1,44 +1,47 @@
 import { DataTypes, Model } from 'sequelize'
 import { sequelize } from '../../database/db.js'
 
-class User extends Model {}
-User.init({
+class Voter extends Model {}
+Voter.init({
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true
   },
-  name: {
+  from: {
     type: DataTypes.STRING,
     allowNull: false,
     validate: {
-      len: [3, 255]
+      len: [1, 255]
     }
   },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-    validate: {
-      isEmail: true
-    }
-  },
-  password: {
+  phone: {
     type: DataTypes.STRING,
     allowNull: false,
     validate: {
-      len: [3, 255]
+      len: [1, 255]
     }
   },
-  birth_date: DataTypes.STRING,
+  frmPhone: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      len: [1, 255]
+    }
+  },
+  vote: DataTypes.BOOLEAN,
+  info: {
+    type: DataTypes.JSON,
+    allowNull: true
+  },
   created_at: DataTypes.STRING,
   updated_at: DataTypes.STRING
 }, {
   sequelize,
-  modelName: 'User',
-  tableName: 'Users',
+  modelName: 'Voter',
+  tableName: 'Voters',
   timestamps: false,
   underscored: true
 })
 
-export default User
+export default Voter

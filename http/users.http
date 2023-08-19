@@ -12,18 +12,6 @@ Content-Type: application/json
     "email":"sebas2@gmail.com",
     "password": "qaws12pj-22",
     "birth_date": "04021997",
-    "connected": false
-}
-
-### CREATE
-POST {{api}}/
-Content-Type: application/json
-
-{
-    "name":"CataLina Gomez Moreno",
-    "email":"cata@gmail.com",
-    "password": "qaws12pj-22",
-    "connected": false
 }
 
 
@@ -50,26 +38,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxN
     "name": "Sebas updatee",
     "email": "sebas@gmail.com",
     "password": "qaws12pj-22",
-    "connected": true
 }
 
 ### DELETE
 DELETE {{api}}/
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjg4NDQxNjYwLCJleHAiOjE2ODg0NDUyNjB9.HUl2M79rLB03J8lFJUUQuVggmPydnuHAc3g3ey10Ztk
-
-
-
-### UPDATE BY ID
-PATCH {{api}}/1
-Content-Type: application/json
-
-{
-    "name": "Sebas updatee",
-    "email": "sebas@gmail.com",
-    "password": "qaws12pj-22",
-    "connected": false
-}
-
-### DELETE with ID
-DELETE {{api}}/1

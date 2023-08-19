@@ -6,13 +6,9 @@ import { config as dotenv } from 'dotenv'
 import { sequelize } from './database/db.js'
 // rutas
 import usersRoutes from './routes/users.js'
-import countriesRoutes from './routes/countries.js'
-import approvedRoutes from './routes/approvedNums.js'
-import contactsRoutes from './routes/contacts.js'
-import agentsRoutes from './routes/agents.js'
+import votersRoutes from './routes/voters.js'
+import surveysRoutes from './routes/surveys.js'
 import whatsappRoutes from './routes/whatsapp.js'
-// agregar asosiaciones db
-import './models/associations.js'
 // socket server
 import http from 'http'
 import { Server as SocketIOServer } from 'socket.io'
@@ -39,10 +35,8 @@ await configureSocketIO(io)
 const wppIoRoutes = whatsappRoutes(io)
 // usar rutas
 app.use('/api/users', usersRoutes)
-app.use('/api/countries', countriesRoutes)
-app.use('/api/approvednums', approvedRoutes)
-app.use('/api/contacts', contactsRoutes)
-app.use('/api/agents', agentsRoutes)
+app.use('/api/voters', votersRoutes)
+app.use('/api/surveys', surveysRoutes)
 app.use('/api/whatsapp', wppIoRoutes)
 
 app.get('/', (req, res) => {
@@ -51,7 +45,7 @@ app.get('/', (req, res) => {
 
 server.listen(app.get('port'), async () => {
   console.log(cl.bgBlue('Server iniciado en puerto: ' + app.get('port')))
-  sequelize.sync({ force: false }).then(() => {
+  sequelize.sync({ force: true }).then(() => {
     console.log(cl.bgBlue('DB SYNC TRUE/FALSE = resetear datos cada que inicia el api'))
   }).catch(error => {
     console.log(cl.bgRed('se ha producido un error ', error.message))

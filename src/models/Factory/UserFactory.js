@@ -10,24 +10,24 @@ class User {
     return await user.login(email)
   }
 
-  static async getUsers (options) {
-    return await user.getUsers(options)
+  static async getAll (options) {
+    return await user.getAll(options)
   }
 
-  static async getUser (id) {
-    return await user.getUser(id)
+  static async getItem (id) {
+    return await user.getItem(id)
   }
 
-  static async createUser (body) {
-    return await user.createUser(body)
+  static async createItem (body) {
+    return await user.createItem(body)
   }
 
-  static async updateUser (body) {
-    return await user.updateUser(body)
+  static async updateItem (body) {
+    return await user.updateItem(body)
   }
 
-  static async deleteUser (body) {
-    return await user.deleteUser(body)
+  static async deleteItem (id) {
+    return await user.deleteItem(id)
   }
 }
 

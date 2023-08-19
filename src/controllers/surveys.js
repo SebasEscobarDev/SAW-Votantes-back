@@ -1,16 +1,14 @@
-import Contact from '../models/Factory/ContactFactory.js'
-import { config as dotenv } from 'dotenv'
+import Survey from '../models/Factory/SurveyFactory.js'
 import { handleSequelizeError } from './handleError/sequalizeError.js'
-dotenv()
 
-export const getContacts = async (req, res, next) => {
+export const getAll = async (req, res, next) => {
   // paginacion
   const options = {}
   options.results = req.query.results ?? 10
   options.page = req.query.page ?? 1
-  let totalItems, contacts
+  let totalItems, items
   try {
-    totalItems = await Contact.totalItems()
+    totalItems = await Survey.totalItems()
   } catch (e) {
     const { description, error } = handleSequelizeError(e)
     return res.status(500).json({
@@ -20,18 +18,18 @@ export const getContacts = async (req, res, next) => {
     })
   }
   try {
-    contacts = await Contact.getContacts(options)
+    items = await Survey.getAll(options)
   } catch (e) {
     const { description, error } = handleSequelizeError(e)
     return res.status(500).json({
-      message: 'Error while Getting all Contacts.',
+      message: 'Error while Getting all Votes.',
       description,
       error
     })
   }
   const lastPage = Math.ceil(totalItems / options.results)
   const response = {
-    data: contacts,
+    data: items,
     total: totalItems,
     page: options.page,
     perPage: options.results,
@@ -40,56 +38,56 @@ export const getContacts = async (req, res, next) => {
   return res.status(200).json(response)
 }
 
-export const getContact = async (req, res, next) => {
+export const getItem = async (req, res, next) => {
   try {
-    const contact = await Contact.getContact(req.params.id)
-    return res.status(200).json(contact)
+    const item = await Survey.getItem(req.params.id)
+    return res.status(200).json(item)
   } catch (e) {
     const { description, error } = handleSequelizeError(e)
     return res.status(500).json({
-      message: 'Error while getting Contact.',
+      message: 'Error while getting Survey.',
       description,
       error
     })
   }
 }
 
-export const createContact = async (req, res, next) => {
+export const createItem = async (req, res, next) => {
   try {
-    const contact = await Contact.createContact(req.body)
-    return res.status(200).json(contact)
+    const item = await Survey.createItem(req.body)
+    return res.status(200).json(item)
   } catch (e) {
     const { description, error } = handleSequelizeError(e)
     return res.status(500).json({
-      message: 'Error while Creating Contact.',
+      message: 'Error while Creating Survey.',
       description,
       error
     })
   }
 }
 
-export const updateContact = async (req, res, next) => {
+export const updateItem = async (req, res, next) => {
   try {
-    const contact = await Contact.updateContact(req.body)
-    return res.status(200).json(contact)
+    const item = await Survey.updateItem(req.body)
+    return res.status(200).json(item)
   } catch (e) {
     const { description, error } = handleSequelizeError(e)
     return res.status(500).json({
-      message: 'Error while updating Contact.',
+      message: 'Error while updating Survey.',
       description,
       error
     })
   }
 }
 
-export const deleteContact = async (req, res, next) => {
+export const deleteItem = async (req, res, next) => {
   try {
-    const contact = await Contact.deleteContact(req.body)
-    return res.status(200).json(contact)
+    const item = await Survey.deleteItem(req.body.id)
+    return res.status(200).json(item)
   } catch (e) {
     const { description, error } = handleSequelizeError(e)
     return res.status(500).json({
-      message: 'Error while deleting contact.',
+      message: 'Error while deleting Survey.',
       description,
       error
     })

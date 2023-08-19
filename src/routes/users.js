@@ -1,20 +1,20 @@
 import { Router } from 'express'
 import { body } from 'express-validator'
 import {
-  getUsers,
-  createUser,
-  getUser,
-  updateUser,
-  deleteUser,
+  getAll,
+  createItem,
+  getItem,
+  updateItem,
+  deleteItem,
   login
 } from '../controllers/users.js'
 import { validateToken } from '../middlewares/validateToken.js'
 import { validateFields } from '../middlewares/validateFields.js'
 const router = Router()
 
-router.get('/', getUsers)
+router.get('/', getAll)
 
-router.get('/:id', validateToken, getUser)
+router.get('/:id', validateToken, getItem)
 
 router.post('/', [
   body([
@@ -22,14 +22,13 @@ router.post('/', [
     'email',
     'password',
     'birth_date'
-  ], 'field is required.').notEmpty().escape().trim().isLength({ min: 3 }),
-  body('connected', 'field is required.').isBoolean()
-], validateFields, createUser)
+  ], 'field is required.').notEmpty().escape().trim().isLength({ min: 3 })
+], validateFields, createItem)
 // ruta protegida
-router.patch('/', validateToken, updateUser)
+router.patch('/', validateToken, updateItem)
 
 // delete protegida
-router.delete('/', validateToken, deleteUser)
+router.delete('/', validateToken, deleteItem)
 
 // LOGIN
 router.post('/login', [

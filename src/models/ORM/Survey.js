@@ -1,14 +1,14 @@
 import { DataTypes, Model } from 'sequelize'
 import { sequelize } from '../../database/db.js'
 
-class Agent extends Model {}
-Agent.init({
+class Survey extends Model {}
+Survey.init({
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true
   },
-  fullphone: {
+  code: {
     type: DataTypes.STRING,
     unique: true,
     allowNull: false,
@@ -16,23 +16,30 @@ Agent.init({
       len: [3, 255]
     }
   },
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      len: [3, 255]
-    }
+  txtWelcome: {
+    type: DataTypes.TEXT,
+    allowNull: false
   },
-  receive: DataTypes.STRING,
-  active: DataTypes.BOOLEAN,
+  txtYes: {
+    type: DataTypes.TEXT,
+    allowNull: false
+  },
+  txtNo: {
+    type: DataTypes.TEXT,
+    allowNull: false
+  },
+  info: {
+    type: DataTypes.JSON,
+    allowNull: true
+  },
   created_at: DataTypes.STRING,
   updated_at: DataTypes.STRING
 }, {
   sequelize,
-  modelName: 'Agent',
-  tableName: 'Agents',
+  modelName: 'Survey',
+  tableName: 'Surveys',
   timestamps: false,
   underscored: true
 })
 
-export default Agent
+export default Survey

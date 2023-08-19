@@ -2,9 +2,7 @@ import { Router } from 'express'
 import wppweb from 'whatsapp-web.js'
 // import qrcode from 'qrcode-terminal';
 import qrcode from 'qrcode'
-import Agent from '../models/Factory/AgentFactory.js'
-import Contact from '../models/Factory/ContactFactory.js'
-import moment from 'moment'
+import Voter from '../models/Factory/VoterFactory.js'
 // import { sendContacts } from '../controllers/agents.js'
 import { validateToken } from '../middlewares/validateToken.js'
 import cl from 'picocolors'
@@ -15,8 +13,6 @@ const router = Router()
 
 let qrCodeData = null
 let isConnected = false
-let sendContactsToAgent = false
-let activeAgents = Agent.getActiveAgents()
 let client
 
 async function generateQRCode (data) {
@@ -31,8 +27,6 @@ async function generateQRCode (data) {
 function whatsappFunctions (io) {
   qrCodeData = null
   isConnected = false
-  sendContactsToAgent = false
-  activeAgents = Agent.getActiveAgents()
 
   client = new Client({
     authStrategy: new LocalAuth()
@@ -60,40 +54,19 @@ function whatsappFunctions (io) {
     if (message.body === '') return
     const contacto = await message.getContact()
     const formatNumber = await contacto.getFormattedNumber()
-    const countryCode = await contacto.getCountryCode()
+    // const countryCode = await contacto.getCountryCode()
     // const chat            = await contacto.getChat();
     // const info            = await message.getInfo();
-    const avatar = await contacto.getProfilePicUrl()
+    // const avatar = await contacto.getProfilePicUrl()
     // io.emit('messageResponse', msn)
 
-    const historialArray = []
-
-    const historial = {
-      date: moment(new Date()).utcOffset('-0500').format('YYYY-MM-DD HH:mm:ss'),
-      message: message.body
+    const item = {
+      from: 'whatsapp',
+      phone: contacto.id.user ?? '---',
+      frmPhone: formatNumber ?? '---'
     }
-    historialArray.push(historial)
-
-    console.log({ name: contacto.pushname, ...historial })
-
-    const contact = {
-      device_type: message.deviceType ?? '---',
-      country_code: countryCode ?? '---',
-      full_phone: contacto.id.user ?? '---',
-      formatted_phone: formatNumber ?? '---',
-      name: contacto.name ?? '---',
-      pushname: contacto.pushname ?? '---',
-      avatar: avatar ?? '---',
-      historial: JSON.stringify(historialArray)
-    }
-    await Contact.createContact(contact)
-    console.log(cl.yellow(sendContactsToAgent))
-    if (sendContactsToAgent) {
-      // enviar contacto a agentes activos en orden.
-      if (activeAgents) {
-        console.log(cl.bgGreen(activeAgents))
-      }
-    }
+    await Voter.createItem(item)
+    console.log(cl.green('Voto Creado'))
   })
 
   client.on('disconnected', () => {
@@ -121,6 +94,8 @@ function whatsappFunctions (io) {
 export default function whatsappRoutes (io) {
   const whatsappFuncs = whatsappFunctions(io)
 
+  whatsappFuncs.sendMessageToClient('573148406835', 'Prueba de Texto')
+
   // Ahora puedes usar las funciones definidas y acceder a la variable 'client'
   // whatsappFuncs.sendMessageToClient("Hola, esto es un mensaje desde fuera");
 
@@ -137,30 +112,5 @@ export default function whatsappRoutes (io) {
     }
   })
 
-  // router.post('/sendcontacts', validateToken, sendContacts)
-
-  router.post('/sendauto', validateToken, async (req, res) => {
-    if (req.body.active) {
-      sendContactsToAgent = true
-      // enviar contactos no enviados
-      const sending = await sendUnsentContacts()
-      // if( sending ){
-      //   sending.map(contact=>{
-
-      //   })
-      // }
-      whatsappFuncs.sendMessageToClient('573148406835', JSON.stringify(sending))
-      return res.status(200).json({ message: 'Envio automatico Activado' })
-    } else {
-      sendContactsToAgent = false
-      return res.status(200).json({ message: 'Envio automatico Desactivado' })
-    }
-  })
-
   return router
-}
-
-const sendUnsentContacts = async (activeAgents) => {
-  const idContacts = await Contact.getUnsentContacts()
-  return idContacts
 }

@@ -7,21 +7,17 @@ const ARRAY_ATTRIBUTES = ['id', 'name', 'email', 'birth_date', 'connected', 'cre
 
 class User {
   async totalItems () {
-    return await UserModel.count().catch(e => {
-      console.log(e)
-    })
+    return await UserModel.count().catch(e => { console.log(e) })
   }
 
   async login (email) {
     return await UserModel.findOne({
       where: { email },
       raw: true
-    }).catch(e => {
-      console.log(e)
-    })
+    }).catch(e => { console.log(e) })
   }
 
-  async getUsers ({ results, page }) {
+  async getAll ({ results, page }) {
     return await UserModel.findAll({
       offset: (page - 1) * results,
       limit: results,
@@ -30,28 +26,29 @@ class User {
       ],
       attributes: ARRAY_ATTRIBUTES,
       raw: true
-    }).catch(e => {
-      console.log(e)
-    })
+    }).catch(e => { console.log(e) })
   }
 
-  async getUser (id) {
+  async getItem (id) {
     return await UserModel.findOne({
       where: { id },
       attributes: ARRAY_ATTRIBUTES,
       raw: true
-    }).catch(e => {
-      console.log(e)
-    })
+    }).catch(e => { console.log(e) })
   }
 
-  async createUser (body) {
+  async deleteItem (id) {
+    return await UserModel.destroy({
+      where: { id }
+    }).catch(e => { console.log(e) })
+  }
+
+  async createItem (body) {
     const hashPass = await bcrypt.hash(body.password, 12)
     return await UserModel.create({
       name: body.name,
       email: body.email,
       password: hashPass,
-      connected: false,
       birth_date: moment(body.birth_date, 'DD-MM-YYYY').utcOffset('-0500').format('YYYY-MM-DD HH:mm:ss'),
       created_at: moment(new Date()).utcOffset('-0500').format('YYYY-MM-DD HH:mm:ss'),
       updated_at: moment(new Date()).utcOffset('-0500').format('YYYY-MM-DD HH:mm:ss')
@@ -59,13 +56,11 @@ class User {
     {
       raw: true
     }
-    ).catch(e => {
-      console.log(e)
-    })
+    ).catch(e => { console.log(e) })
   }
 
-  async updateUser (body) {
-    let { id, name, email, password, birth_date, connected } = body
+  async updateItem (body) {
+    let { id, name, email, password, birth_date } = body
     const updated_at = moment(new Date()).utcOffset('-0500').format('YYYY-MM-DD HH:mm:ss')
 
     if (password) {
@@ -76,29 +71,17 @@ class User {
       birth_date = moment(birth_date, 'DD-MM-YYYY').utcOffset('-0500').format('YYYY-MM-DD HH:mm:ss')
     }
 
-    const response = {
+    const updateInfo = {
       ...(name && { name }),
       ...(email && { email }),
       ...(password && { password }),
       ...(birth_date && { birth_date }),
-      ...(connected !== undefined && { connected }),
       ...(updated_at && { updated_at })
     }
-    console.log(response)
-    return await UserModel.update(response, {
+    return await UserModel.update(updateInfo, {
       where: { id },
       raw: true
-    }).catch(e => {
-      console.log(e)
-    })
-  }
-
-  async deleteUser ({ id }) {
-    return await UserModel.destroy({
-      where: { id }
-    }).catch(e => {
-      console.log(e)
-    })
+    }).catch(e => { console.log(e) })
   }
 }
 

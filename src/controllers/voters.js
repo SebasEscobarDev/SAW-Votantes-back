@@ -1,37 +1,35 @@
-import ApprovedNum from '../models/Factory/ApprovedNumFactory.js'
-import { config as dotenv } from 'dotenv'
+import Voter from '../models/Factory/VoterFactory.js'
 import { handleSequelizeError } from './handleError/sequalizeError.js'
-dotenv()
 
-export const getApprovedNums = async (req, res, next) => {
+export const getAll = async (req, res, next) => {
   // paginacion
   const options = {}
   options.results = req.query.results ?? 10
   options.page = req.query.page ?? 1
-  let totalItems, approvedNums
+  let totalItems, items
   try {
-    totalItems = await ApprovedNum.totalItems()
+    totalItems = await Voter.totalItems()
   } catch (e) {
     const { description, error } = handleSequelizeError(e)
     return res.status(500).json({
-      message: 'Error while Getting Count Approved Nums.',
+      message: 'Error while Getting total Items.',
       description,
       error
     })
   }
   try {
-    approvedNums = await ApprovedNum.getApprovedNums(options)
+    items = await Voter.getAll(options)
   } catch (e) {
     const { description, error } = handleSequelizeError(e)
     return res.status(500).json({
-      message: 'Error while Getting All Approved Nums.',
+      message: 'Error while Getting all Votes.',
       description,
       error
     })
   }
   const lastPage = Math.ceil(totalItems / options.results)
   const response = {
-    data: approvedNums,
+    data: items,
     total: totalItems,
     page: options.page,
     perPage: options.results,
@@ -40,56 +38,56 @@ export const getApprovedNums = async (req, res, next) => {
   return res.status(200).json(response)
 }
 
-export const getApprovedNum = async (req, res, next) => {
+export const getItem = async (req, res, next) => {
   try {
-    const approvedNum = await ApprovedNum.getApprovedNum(req.params.id)
-    return res.status(200).json(approvedNum)
+    const item = await Voter.getItem(req.params.id)
+    return res.status(200).json(item)
   } catch (e) {
     const { description, error } = handleSequelizeError(e)
     return res.status(500).json({
-      message: 'Error while getting Approved Num.',
+      message: 'Error while getting Voter.',
       description,
       error
     })
   }
 }
 
-export const createApprovedNum = async (req, res, next) => {
+export const createItem = async (req, res, next) => {
   try {
-    const approvedNum = await ApprovedNum.createApprovedNum(req.body)
-    return res.status(200).json(approvedNum)
+    const item = await Voter.createItem(req.body)
+    return res.status(200).json(item)
   } catch (e) {
     const { description, error } = handleSequelizeError(e)
     return res.status(500).json({
-      message: 'Error while Creating Approved Num.',
+      message: 'Error while Creating Voter.',
       description,
       error
     })
   }
 }
 
-export const updateApprovedNum = async (req, res, next) => {
+export const updateItem = async (req, res, next) => {
   try {
-    const approvedNum = await ApprovedNum.updateApprovedNum(req.body)
-    return res.status(200).json(approvedNum)
+    const item = await Voter.updateItem(req.body)
+    return res.status(200).json(item)
   } catch (e) {
     const { description, error } = handleSequelizeError(e)
     return res.status(500).json({
-      message: 'Error while updating Approved Num.',
+      message: 'Error while updating Voter.',
       description,
       error
     })
   }
 }
 
-export const deleteApprovedNum = async (req, res, next) => {
+export const deleteItem = async (req, res, next) => {
   try {
-    const approvedNum = await ApprovedNum.deleteApprovedNum(req.body)
-    return res.status(200).json(approvedNum)
+    const item = await Voter.deleteItem(req.body.id)
+    return res.status(200).json(item)
   } catch (e) {
     const { description, error } = handleSequelizeError(e)
     return res.status(500).json({
-      message: 'Error while deleting Approved Num.',
+      message: 'Error while deleting Voter.',
       description,
       error
     })
