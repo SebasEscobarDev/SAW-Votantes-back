@@ -3,6 +3,11 @@
 ### GET ALL
 GET {{api}}/qrcode
 
+### GET ALL
+GET {{api}}/sendmessage
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjkyOTI5MjA2LCJleHAiOjE2OTMwMTU2MDZ9.gtJH-ibBaYIZywMs5gWPPzvMNsBoXy8QgFUe2S9csZs
+
 ####
 POST {{api}}/sendauto
 Content-Type: application/json

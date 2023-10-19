@@ -1,5 +1,6 @@
 import { DataTypes, Model } from 'sequelize'
 import { sequelize } from '../../database/db.js'
+import Survey from './Survey.js'
 
 class Voter extends Model {}
 Voter.init({
@@ -22,7 +23,7 @@ Voter.init({
       len: [1, 255]
     }
   },
-  frmPhone: {
+  step: {
     type: DataTypes.STRING,
     allowNull: false,
     validate: {
@@ -43,5 +44,7 @@ Voter.init({
   timestamps: false,
   underscored: true
 })
+
+Voter.belongsTo(Survey, { foreignKey: 'survey_id' })
 
 export default Voter

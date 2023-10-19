@@ -14,6 +14,10 @@ class Voter {
     return await voter.getItem(id)
   }
 
+  static async getByPhone (phone) {
+    return await voter.getByPhone(phone)
+  }
+
   static async createItem (body) {
     return await voter.createItem(body)
   }
@@ -22,8 +26,8 @@ class Voter {
     return await voter.updateItem(body)
   }
 
-  static async deleteitem (id) {
-    return await voter.deleteitem(id)
+  static async deleteItem (id) {
+    return await voter.deleteItem(id)
   }
 }
 

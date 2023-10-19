@@ -18,10 +18,11 @@ router.get('/:id', validateToken, getItem)
 router.post('/', [
   body([
     'code',
+    'txtInicio',
     'txtWelcome',
     'txtYes',
     'txtNo',
-    'info'
+    'txtEnd'
   ], 'field is required.').notEmpty().escape().trim()
 ], validateToken, validateFields, createItem)
 

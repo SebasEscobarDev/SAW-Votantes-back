@@ -45,7 +45,7 @@ app.get('/', (req, res) => {
 
 server.listen(app.get('port'), async () => {
   console.log(cl.bgBlue('Server iniciado en puerto: ' + app.get('port')))
-  sequelize.sync({ force: true }).then(() => {
+  sequelize.sync({ force: false }).then(() => {
     console.log(cl.bgBlue('DB SYNC TRUE/FALSE = resetear datos cada que inicia el api'))
   }).catch(error => {
     console.log(cl.bgRed('se ha producido un error ', error.message))

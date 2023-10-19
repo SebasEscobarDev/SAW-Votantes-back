@@ -16,6 +16,10 @@ Survey.init({
       len: [3, 255]
     }
   },
+  txtInicio: {
+    type: DataTypes.TEXT,
+    allowNull: false
+  },
   txtWelcome: {
     type: DataTypes.TEXT,
     allowNull: false
@@ -31,6 +35,10 @@ Survey.init({
   info: {
     type: DataTypes.JSON,
     allowNull: true
+  },
+  txtEnd: {
+    type: DataTypes.TEXT,
+    allowNull: false
   },
   created_at: DataTypes.STRING,
   updated_at: DataTypes.STRING

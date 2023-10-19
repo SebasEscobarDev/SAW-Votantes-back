@@ -35,13 +35,16 @@ class Survey {
 
   /* Solo se actualizan metodos CREATE Y UPDATE */
 
-  async createItem ({ code, txtWelcome, txtyes, txtNo, info }) {
+  async createItem ({ code, txtInicio, txtWelcome, txtYes, txtNo, info, txtEnd }) {
+    if (info) info = JSON.stringify(info)
     return await SurveyModel.create({
       code,
+      txtInicio,
       txtWelcome,
-      txtyes,
+      txtYes,
       txtNo,
       info,
+      txtEnd,
       created_at: moment(new Date()).utcOffset('-0500').format('YYYY-MM-DD HH:mm:ss'),
       updated_at: moment(new Date()).utcOffset('-0500').format('YYYY-MM-DD HH:mm:ss')
     },
@@ -50,15 +53,17 @@ class Survey {
     }).catch(e => { console.log(e) })
   }
 
-  async updateItem (body) {
-    const { id, code, txtWelcome, txtyes, txtNo, info } = body
+  async updateItem ({ id, code, txtInicio, txtWelcome, txtYes, txtNo, info, txtEnd }) {
+    if (info) info = JSON.stringify(info)
     const updated_at = moment(new Date()).utcOffset('-0500').format('YYYY-MM-DD HH:mm:ss')
     const updateInfo = {
       ...(code && { code }),
+      ...(txtInicio && { txtInicio }),
       ...(txtWelcome && { txtWelcome }),
-      ...(txtyes && { txtyes }),
+      ...(txtYes && { txtYes }),
       ...(txtNo && { txtNo }),
       ...(info && { info }),
+      ...(txtEnd && { txtEnd }),
       ...(updated_at && { updated_at })
     }
     return await SurveyModel.update(updateInfo, {

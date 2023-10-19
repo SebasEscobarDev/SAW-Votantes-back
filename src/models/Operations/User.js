@@ -3,7 +3,7 @@ import UserModel from '../ORM/User.js'
 import moment from 'moment'
 import bcrypt from 'bcryptjs'
 
-const ARRAY_ATTRIBUTES = ['id', 'name', 'email', 'birth_date', 'connected', 'created_at', 'updated_at']
+const ARRAY_ATTRIBUTES = ['id', 'name', 'email', 'birth_date', 'created_at', 'updated_at']
 
 class User {
   async totalItems () {

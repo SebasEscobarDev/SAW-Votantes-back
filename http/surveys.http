@@ -1,30 +1,31 @@
-@api = http://192.168.1.1:5000/api/surveys
+@api = http://192.168.1.2:5000/api/surveys
 
 ### GET ALL
 GET {{api}}/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjkwNTkxNTMxLCJleHAiOjE2OTA2Nzc5MzF9.MbCfplzStPaYhXOc8JYyaCZ0eEYtn-C9fcOKNgRg2Js
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjkyNTQwNjI2LCJleHAiOjE2OTI2MjcwMjZ9.FjrcqWSdCAFITwlI9sWf42ZIkHp9RyLin-zg1FDLKCg
 
 ### CREATE
 POST {{api}}/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjg5NDI1NDMwLCJleHAiOjE2ODk1MTE4MzB9.MGgxEmiiewLVo0h_UbYfiJsGZ3QkIX_tsHKrx4rrBsc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjkyNTUwODAzLCJleHAiOjE2OTI2MzcyMDN9.-K_xE0hnyT_XYsuDDTMtjq4zuBVov6XGOgHIAyifoLk
 
 {
-    "code": "encuesta",
+    "code": "encuestass",
     "txtWelcome": "Bienvenidos soy Sebas, votarias por mi?",
     "txtYes": "Gracias, txt Yes",
     "txtNo": "Gracias, txt No",
     "info": {
         "nombre":"ingresa tu nombre",
         "cedula":"ingresa tu numero de cedula"
-    },
+    }
+    
 }
 
 ### GET BY ID
 GET {{api}}/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjg5NDI1NDMwLCJleHAiOjE2ODk1MTE4MzB9.MGgxEmiiewLVo0h_UbYfiJsGZ3QkIX_tsHKrx4rrBsc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjkyNTUwODAzLCJleHAiOjE2OTI2MzcyMDN9.-K_xE0hnyT_XYsuDDTMtjq4zuBVov6XGOgHIAyifoLk
 
 ### UPDATE BY ID
 PATCH {{api}}/
@@ -45,5 +46,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxN
 ### DELETE
 DELETE {{api}}/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjg5NDI1NDMwLCJleHAiOjE2ODk1MTE4MzB9.MGgxEmiiewLVo0h_UbYfiJsGZ3QkIX_tsHKrx4rrBsc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjkyNTUwODAzLCJleHAiOjE2OTI2MzcyMDN9.-K_xE0hnyT_XYsuDDTMtjq4zuBVov6XGOgHIAyifoLk
 
+{
+    "id": 2
+}

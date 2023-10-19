@@ -19,10 +19,8 @@ router.post('/', [
   body([
     'from',
     'phone',
-    'frmPhone',
-    'vote',
-    'info'
-  ], 'field is required.').notEmpty().escape().trim()
+    'step'
+  ], 'field is required.').notEmpty()
 ], validateToken, validateFields, createItem)
 
 router.patch('/', validateToken, updateItem)

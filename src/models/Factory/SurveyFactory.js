@@ -22,8 +22,8 @@ class Survey {
     return await survey.updateItem(body)
   }
 
-  static async deleteitem (id) {
-    return await survey.deleteitem(id)
+  static async deleteItem (id) {
+    return await survey.deleteItem(id)
   }
 }
 

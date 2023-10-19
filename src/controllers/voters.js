@@ -83,7 +83,13 @@ export const updateItem = async (req, res, next) => {
 export const deleteItem = async (req, res, next) => {
   try {
     const item = await Voter.deleteItem(req.body.id)
-    return res.status(200).json(item)
+    let response
+    if (item) {
+      response = 'Registro eliminado.'
+    } else {
+      response = 'No se pudo eliminar.'
+    }
+    return res.status(200).json(response)
   } catch (e) {
     const { description, error } = handleSequelizeError(e)
     return res.status(500).json({
